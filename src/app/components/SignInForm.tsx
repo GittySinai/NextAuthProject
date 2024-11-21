@@ -61,7 +61,18 @@ function SignInForm() {
         setName("");
         setEmail("");
         setPassword("");
-        router.push('/')
+        const result = await signUpRes.json();
+        
+        if (result.user) {
+          const user = result.user; // חליצת אובייקט המשתמש בלבד
+          console.log("Full response:", result);
+          sessionStorage.setItem("user", JSON.stringify(user));
+          router.push(`/pages/dashboard`);
+        } else {
+          console.error("User object not found in response.");
+        }
+        
+        
       } else {
         setError("User sign-in failed. Please try again.");
       }
